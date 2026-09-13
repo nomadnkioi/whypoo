@@ -16,37 +16,45 @@
   padding: 0;
 }
 
-body {
-  font-family: var(--font-family);
+html, body {
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  touch-action: manipulation;
+  -webkit-font-smoothing: antialiased;
   background-color: var(--bg-color);
+  font-family: var(--font-family);
   color: var(--text-main);
+}
+
+body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  padding: 0;
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
 }
 
 /* 기본 실제 모바일(아이폰) 뷰포트 컨테이너 (100dvh 꽉 찬 모바일 풀스크린) */
 .app-viewport {
-  width: 100%;
-  max-width: 100%;
+  width: 100vw;
   height: 100dvh;
   max-height: 100dvh;
   background-color: var(--bg-color);
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: max(env(safe-area-inset-top), 24px) 24px max(env(safe-area-inset-bottom), 16px);
+  padding: max(env(safe-area-inset-top), 20px) 24px max(env(safe-area-inset-bottom), 16px) 24px;
   box-shadow: none;
   border-radius: 0;
   border: none;
   -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
 }
 
 /* 실제 핸드폰에서는 가짜 스테이터스 바 & 홈 바 숨김 (진짜 아이폰 상단바 사용) */
@@ -57,17 +65,28 @@ body {
 
 /* PC / 대형 화면(768px 이상)에서만 데스크톱용 아이폰 15 Pro 모크업 프레임 노출 */
 @media (min-width: 768px) {
+  html, body {
+    overflow: auto;
+  }
+
   body {
     background-color: #EFECE6;
   }
 
   .app-viewport {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 393px;
     max-width: 393px;
     height: 852px;
     max-height: 852px;
     border-radius: 48px;
     border: 9px solid #1C1C1E;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    padding: 16px 24px 20px 24px;
   }
 
   .status-bar-mock {
@@ -169,7 +188,6 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   overflow: hidden;
   padding: 0;
   scrollbar-width: none;
@@ -182,12 +200,14 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  overflow: hidden;
 }
 
 /* 상단 통계 헤더 */
 .stats-header {
   margin-bottom: 12px;
+  flex-shrink: 0;
 }
 
 .app-title {
@@ -195,13 +215,13 @@ body {
   font-weight: 800;
   letter-spacing: -0.5px;
   color: #09090B;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .stats-info p {
   font-size: 13px;
   color: var(--text-muted);
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 .stats-info strong {
@@ -210,21 +230,26 @@ body {
 }
 
 .percentage-text {
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
 /* 다이아몬드 그리드 컨테이너 */
 .star-grid-container {
-  background-color: transparent;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 4px 0;
+  min-height: 0;
 }
 
 .star-grid {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  gap: 10px 4px;
+  gap: 8px 4px;
   justify-items: center;
   align-items: center;
+  width: 100%;
 }
 
 .star-grid-item {
@@ -245,14 +270,11 @@ body {
 /* 하단 플로팅 액션 바 (오른쪽 끝 배치) */
 .bottom-floating-bar {
   position: relative;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  flex-shrink: 0;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 4px 0 0;
-  margin-top: auto;
+  padding: 2px 0 0;
   z-index: 10;
   pointer-events: auto;
 }
@@ -297,11 +319,12 @@ body {
 
 /* 이미지 2 스타일 우측 하단 미니 색상 범례(Legend) */
 .color-legend-container {
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 4px;
-  margin-top: 12px;
+  margin-bottom: 4px;
   padding-right: 2px;
 }
 
@@ -336,6 +359,7 @@ body {
   animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 @keyframes fadeIn {
@@ -351,7 +375,7 @@ body {
 
 .poop-select-screen {
   flex: 1;
-  padding: 32px 28px 24px;
+  padding: max(env(safe-area-inset-top), 24px) 28px max(env(safe-area-inset-bottom), 24px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -451,7 +475,7 @@ body {
    일반 모달 스타일 (DayDetailModal)
    ========================================== */
 .modal-overlay {
-  position: absolute;
+  position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(4px);
@@ -475,7 +499,7 @@ body {
   background-color: #FFFFFF;
   border-top-left-radius: 28px;
   border-top-right-radius: 28px;
-  padding: 24px 24px 36px;
+  padding: 24px 24px max(env(safe-area-inset-bottom), 24px);
   box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
   animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -622,3 +646,4 @@ body {
 .add-record-text-btn:active {
   transform: scale(0.95);
 }
+
