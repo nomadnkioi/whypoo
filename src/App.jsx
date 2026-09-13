@@ -22,15 +22,16 @@ export default function App() {
   const [todayStr] = useState(getTodayStr());
   const [user, setUser] = useState(null);
 
-  const [recordsByDate, setRecordsByDate] = useState(() => {
+  const [recordsByDate, setRecordsByDate] = useState({});
+
+  // 기존 로컬스토리지 완전 제거 (Firebase 100% 단일 클라우드 전용)
+  useEffect(() => {
     try {
-      const saved = localStorage.getItem('whypoo_records');
-      if (saved) return JSON.parse(saved);
+      localStorage.removeItem('whypoo_records');
     } catch (e) {
-      console.error('로컬스토리지 로드 실패:', e);
+      console.error('로컬스토리지 제거 실패:', e);
     }
-    return {};
-  });
+  }, []);
 
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
   const [targetDateKey, setTargetDateKey] = useState(getTodayStr());
@@ -48,7 +49,7 @@ export default function App() {
     return () => unsubscribe();
   }, []);
 
-  // 클라우드 실시간 자동 수신
+  // 파이어베이스 클라우드 실시간 자동 수신
   useEffect(() => {
     if (!user) return;
     const unsubscribeCloud = subscribeCloudRecords(user.uid, (cloudRecords) => {
@@ -59,15 +60,9 @@ export default function App() {
     return () => unsubscribeCloud();
   }, [user]);
 
-  // 로컬스토리지 및 백그라운드 클라우드 자동 저장
+  // 파이어베이스 클라우드 자동 저장
   useEffect(() => {
-    try {
-      localStorage.setItem('whypoo_records', JSON.stringify(recordsByDate));
-    } catch (e) {
-      console.error('로컬스토리지 저장 실패:', e);
-    }
-
-    if (user) {
+    if (user && Object.keys(recordsByDate).length > 0) {
       syncRecordsToCloud(user.uid, recordsByDate);
     }
   }, [recordsByDate, user]);
