@@ -12,14 +12,14 @@ import {
   onSnapshot,
 } from 'firebase/firestore';
 
-// 파이어베이스 프로젝트 설정
+// 사용자의 파이어베이스(whypoo-67a9e) 커스텀 프로젝트 설정
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyDemoKey_whypoo_firebase",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "whypoo-app.firebaseapp.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "whypoo-app",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "whypoo-app.appspot.com",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "1234567890",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:1234567890:web:whypoo",
+  apiKey: "AIzaSyCGNllZW0brNUW80SVQt1QzKGFJIM2YpgA",
+  authDomain: "whypoo-67a9e.firebaseapp.com",
+  projectId: "whypoo-67a9e",
+  storageBucket: "whypoo-67a9e.firebasestorage.app",
+  messagingSenderId: "745360462018",
+  appId: "1:745360462018:web:0f1a238084f9ccaa51ab5b"
 };
 
 let app;
