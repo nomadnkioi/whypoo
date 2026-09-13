@@ -56,18 +56,6 @@ export default function App() {
     return () => unsubscribeCloud();
   }, []);
 
-  // 3. 기록 추가/삭제 시 파이어베이스 클라우드 및 로컬스토리지 동시 자동 저장
-  useEffect(() => {
-    if (Object.keys(recordsByDate).length > 0) {
-      try {
-        localStorage.setItem('whypoo_records', JSON.stringify(recordsByDate));
-      } catch (e) {
-        console.error('로컬스토리지 백업 실패:', e);
-      }
-      syncRecordsToCloud(recordsByDate);
-    }
-  }, [recordsByDate]);
-
   const handleAddRecord = (poopTypeId, dateKey = targetDateKey) => {
     const now = new Date();
     const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(
@@ -82,10 +70,17 @@ export default function App() {
 
     setRecordsByDate((prev) => {
       const currentList = prev[dateKey] || [];
-      return {
+      const updated = {
         ...prev,
         [dateKey]: [...currentList, newRecord],
       };
+
+      try {
+        localStorage.setItem('whypoo_records', JSON.stringify(updated));
+      } catch (e) {}
+      syncRecordsToCloud(updated);
+
+      return updated;
     });
   };
 
@@ -99,6 +94,12 @@ export default function App() {
       } else {
         nextState[dateKey] = updated;
       }
+
+      try {
+        localStorage.setItem('whypoo_records', JSON.stringify(nextState));
+      } catch (e) {}
+      syncRecordsToCloud(nextState);
+
       return nextState;
     });
   };
