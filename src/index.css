@@ -29,17 +29,19 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* 기본 실제 모바일(아이폰) 뷰포트 컨테이너 (100% 꽉 찬 풀스크린) */
+/* 기본 실제 모바일(아이폰) 뷰포트 컨테이너 (100dvh 꽉 찬 모바일 풀스크린) */
 .app-viewport {
   width: 100%;
   max-width: 100%;
-  height: 100vh;
-  max-height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
   background-color: var(--bg-color);
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  padding: max(env(safe-area-inset-top), 24px) 24px max(env(safe-area-inset-bottom), 16px);
   box-shadow: none;
   border-radius: 0;
   border: none;
@@ -162,45 +164,44 @@ body {
   white-space: nowrap;
 }
 
-/* iPhone 하단 홈 인디케이터 바 */
-.home-indicator-bar {
-  width: 120px;
-  height: 4.5px;
-  background-color: #000000;
-  border-radius: 100px;
-  margin: 4px auto 6px;
-  opacity: 0.18;
-  flex-shrink: 0;
-}
-
-/* 메인 스크롤 영역 */
+/* 메인 스크롤/콘텐츠 영역 */
 .app-content {
   flex: 1;
-  overflow-y: auto;
-  padding: 20px 24px 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 0;
   scrollbar-width: none;
 }
 .app-content::-webkit-scrollbar {
   display: none;
 }
 
-/* 상단 통계 헤더 (첫 번째 이미지) */
-.stats-header {
-  margin-bottom: 28px;
+.calendar-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.app-title {
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  color: #09090B;
+/* 상단 통계 헤더 */
+.stats-header {
   margin-bottom: 12px;
 }
 
+.app-title {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #09090B;
+  margin-bottom: 8px;
+}
+
 .stats-info p {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-muted);
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .stats-info strong {
@@ -215,13 +216,13 @@ body {
 /* 다이아몬드 그리드 컨테이너 */
 .star-grid-container {
   background-color: transparent;
-  padding: 12px 0;
+  padding: 4px 0;
 }
 
 .star-grid {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  gap: 14px 6px;
+  gap: 10px 4px;
   justify-items: center;
   align-items: center;
 }
@@ -243,16 +244,17 @@ body {
 
 /* 하단 플로팅 액션 바 (오른쪽 끝 배치) */
 .bottom-floating-bar {
-  position: absolute;
-  bottom: 24px;
+  position: relative;
+  bottom: 0;
   left: 0;
   right: 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  padding: 0 24px;
+  padding: 4px 0 0;
+  margin-top: auto;
   z-index: 10;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .fab-add-btn {
@@ -263,8 +265,6 @@ body {
   color: #18181B;
   letter-spacing: 0.5px;
   cursor: pointer;
-  margin-left: auto;
-  pointer-events: auto;
   padding: 4px 8px;
   transition: opacity 0.15s ease, transform 0.15s ease;
 }
@@ -300,9 +300,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 5px;
-  margin-top: 28px;
-  padding-right: 6px;
+  gap: 4px;
+  margin-top: 12px;
+  padding-right: 2px;
 }
 
 .legend-item {
@@ -312,7 +312,7 @@ body {
 }
 
 .legend-text {
-  font-size: 9.5px;
+  font-size: 9px;
   font-weight: 600;
   color: #A1A1AA;
   letter-spacing: -0.2px;
@@ -329,10 +329,10 @@ body {
    배변 선택 화면 (두 번째 이미지 스타일)
    ========================================== */
 .poop-select-overlay {
-  position: absolute;
+  position: fixed;
   inset: 0;
   background-color: #F6F5F2;
-  z-index: 100;
+  z-index: 9999;
   animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
