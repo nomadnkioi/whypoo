@@ -206,7 +206,7 @@ body {
 
 /* 상단 통계 헤더 */
 .stats-header {
-  margin-bottom: 48px;
+  margin-bottom: 76px;
   flex-shrink: 0;
 }
 
@@ -233,14 +233,14 @@ body {
   margin-top: 1px;
 }
 
-/* 다이아몬드 그리드 컨테이너 (적절한 여백을 가진 균형 잡힌 상단-중앙 위치) */
+/* 다이아몬드 그리드 컨테이너 (적절하게 내려온 편안한 위치) */
 .star-grid-container {
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
-  margin-bottom: 24px;
+  margin-bottom: 36px;
   min-height: 0;
 }
 
@@ -268,14 +268,14 @@ body {
   transform: scale(0.95);
 }
 
-/* 이미지 2 스타일 우측 미니 색상 범례(Legend) - 다이아몬드 그리드 바로 아래 위치 */
+/* 이미지 2 스타일 우측 미니 색상 범례(Legend) - 다이아몬드 우측 축 안쪽으로 들어오게 정렬 */
 .color-legend-container {
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 5px;
-  padding-right: 2px;
+  padding-right: 16px;
 }
 
 .legend-item {
@@ -298,14 +298,14 @@ body {
   border-radius: 2px;
 }
 
-/* 하단 플로팅 액션 바 (화면 최하단 우측 끝 배치) */
+/* 하단 플로팅 액션 바 (화면 안쪽으로 살짝 이동 및 버튼 확대) */
 .bottom-floating-bar {
   position: relative;
   flex-shrink: 0;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 8px 0 0;
+  padding: 8px 12px 0 0;
   margin-top: auto;
   z-index: 10;
   pointer-events: auto;
@@ -314,8 +314,8 @@ body {
 .fab-add-btn {
   background: transparent;
   border: none;
-  font-size: 20px;
-  font-weight: 800;
+  font-size: 24px;
+  font-weight: 900;
   color: #18181B;
   letter-spacing: 0.5px;
   cursor: pointer;
