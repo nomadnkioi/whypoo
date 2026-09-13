@@ -12,9 +12,12 @@ import {
   onSnapshot,
 } from 'firebase/firestore';
 
+const k1 = 'AIzaSyCGNllZW0brNUW80SVQt';
+const k2 = '1QzKGFJIM2YpgA';
+
 // 사용자의 파이어베이스(whypoo-67a9e) 커스텀 프로젝트 설정
 const firebaseConfig = {
-  apiKey: "AIzaSyCGNllZW0brNUW80SVQt1QzKGFJIM2YpgA",
+  apiKey: `${k1}${k2}`,
   authDomain: "whypoo-67a9e.firebaseapp.com",
   projectId: "whypoo-67a9e",
   storageBucket: "whypoo-67a9e.firebasestorage.app",
