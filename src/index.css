@@ -188,6 +188,7 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   overflow: hidden;
   padding: 0;
   scrollbar-width: none;
@@ -197,7 +198,6 @@ body {
 }
 
 .calendar-container {
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -206,7 +206,7 @@ body {
 
 /* 상단 통계 헤더 */
 .stats-header {
-  margin-bottom: 12px;
+  margin-bottom: 28px;
   flex-shrink: 0;
 }
 
@@ -233,20 +233,21 @@ body {
   margin-top: 1px;
 }
 
-/* 다이아몬드 그리드 컨테이너 */
+/* 다이아몬드 그리드 컨테이너 (상단 통계 바로 아래 위치) */
 .star-grid-container {
-  flex: 1;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 0;
+  padding: 0;
+  margin-bottom: 20px;
   min-height: 0;
 }
 
 .star-grid {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  gap: 8px 4px;
+  gap: 10px 4px;
   justify-items: center;
   align-items: center;
   width: 100%;
@@ -267,14 +268,45 @@ body {
   transform: scale(0.95);
 }
 
-/* 하단 플로팅 액션 바 (오른쪽 끝 배치) */
+/* 이미지 2 스타일 우측 미니 색상 범례(Legend) - 다이아몬드 그리드 바로 아래 위치 */
+.color-legend-container {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  padding-right: 2px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-text {
+  font-size: 9px;
+  font-weight: 600;
+  color: #A1A1AA;
+  letter-spacing: -0.2px;
+  text-transform: lowercase;
+}
+
+.legend-bar {
+  width: 14px;
+  height: 2.5px;
+  border-radius: 2px;
+}
+
+/* 하단 플로팅 액션 바 (화면 최하단 우측 끝 배치) */
 .bottom-floating-bar {
   position: relative;
   flex-shrink: 0;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 2px 0 0;
+  padding: 8px 0 0;
+  margin-top: auto;
   z-index: 10;
   pointer-events: auto;
 }
@@ -282,12 +314,12 @@ body {
 .fab-add-btn {
   background: transparent;
   border: none;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 800;
   color: #18181B;
   letter-spacing: 0.5px;
   cursor: pointer;
-  padding: 4px 8px;
+  padding: 6px 10px;
   transition: opacity 0.15s ease, transform 0.15s ease;
 }
 
@@ -297,35 +329,6 @@ body {
 
 .fab-add-btn:active {
   transform: scale(0.95);
-}
-
-.sample-data-btn {
-  background-color: #F4F4F5;
-  border: 1px solid #E4E4E7;
-  padding: 8px 14px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 600;
-  color: #52525B;
-  cursor: pointer;
-  pointer-events: auto;
-  transition: all 0.2s ease;
-}
-
-.sample-data-btn:hover {
-  background-color: #E4E4E7;
-  color: #18181B;
-}
-
-/* 이미지 2 스타일 우측 하단 미니 색상 범례(Legend) */
-.color-legend-container {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
-  margin-bottom: 4px;
-  padding-right: 2px;
 }
 
 .legend-item {
