@@ -98,7 +98,7 @@ export default function App() {
       try {
         localStorage.setItem('whypoo_records', JSON.stringify(nextState));
       } catch (e) {}
-      syncRecordsToCloud(nextState);
+      syncRecordsToCloud(nextState, true);
 
       return nextState;
     });
