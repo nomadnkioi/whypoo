@@ -439,8 +439,8 @@ body {
 .back-btn {
   background: transparent;
   border: none;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 28px;
+  font-weight: 800;
   color: #A1A1AA;
   cursor: pointer;
   display: inline-flex;

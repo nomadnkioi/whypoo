@@ -15,14 +15,14 @@ export const POOP_TYPES = [
     color: '#1A1A1A', // 검은색
   },
   {
-    id: 'diarrhea',
-    label: 'mild diarrhea',
-    color: '#8B1E2D', // 빨강
-  },
-  {
     id: 'rabbit',
     label: 'rabbit droppings',
     color: '#EA9D9D', // 핑크
+  },
+  {
+    id: 'diarrhea',
+    label: 'mild diarrhea',
+    color: '#8B1E2D', // 빨강
   },
 ];
 
