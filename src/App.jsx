@@ -22,16 +22,16 @@ export default function App() {
   const [todayStr] = useState(getTodayStr());
   const [user, setUser] = useState(null);
 
-  const [recordsByDate, setRecordsByDate] = useState({});
-
-  // 기존 로컬스토리지 완전 제거 (Firebase 100% 단일 클라우드 전용)
-  useEffect(() => {
+  // 1. 로컬스토리지에서 0ms 즉시 읽기 (초기 렌더링 깜빡임 방지)
+  const [recordsByDate, setRecordsByDate] = useState(() => {
     try {
-      localStorage.removeItem('whypoo_records');
+      const saved = localStorage.getItem('whypoo_records');
+      if (saved) return JSON.parse(saved);
     } catch (e) {
-      console.error('로컬스토리지 제거 실패:', e);
+      console.error('로컬스토리지 로드 실패:', e);
     }
-  }, []);
+    return {};
+  });
 
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
   const [targetDateKey, setTargetDateKey] = useState(getTodayStr());
@@ -40,32 +40,33 @@ export default function App() {
 
   const [selectedDayDetail, setSelectedDayDetail] = useState(null);
 
-  // 무자각 백그라운드 인증 초기화 및 동기화
+  // 2. 무자각 백그라운드 인증 및 클라우드 실시간 동기화 수신 (Safari <-> 홈화면 PWA 100% 교차 공유)
   useEffect(() => {
     initSilentCloudAuth();
-    const unsubscribe = subscribeAuth((currentUser) => {
-      setUser(currentUser);
-    });
-    return () => unsubscribe();
-  }, []);
-
-  // 파이어베이스 클라우드 실시간 자동 수신
-  useEffect(() => {
-    if (!user) return;
-    const unsubscribeCloud = subscribeCloudRecords(user.uid, (cloudRecords) => {
+    const unsubscribeCloud = subscribeCloudRecords((cloudRecords) => {
       if (cloudRecords) {
         setRecordsByDate(cloudRecords);
+        try {
+          localStorage.setItem('whypoo_records', JSON.stringify(cloudRecords));
+        } catch (e) {
+          console.error('로컬스토리지 백업 실패:', e);
+        }
       }
     });
     return () => unsubscribeCloud();
-  }, [user]);
+  }, []);
 
-  // 파이어베이스 클라우드 자동 저장
+  // 3. 기록 추가/삭제 시 파이어베이스 클라우드 및 로컬스토리지 동시 자동 저장
   useEffect(() => {
-    if (user && Object.keys(recordsByDate).length > 0) {
-      syncRecordsToCloud(user.uid, recordsByDate);
+    if (Object.keys(recordsByDate).length > 0) {
+      try {
+        localStorage.setItem('whypoo_records', JSON.stringify(recordsByDate));
+      } catch (e) {
+        console.error('로컬스토리지 백업 실패:', e);
+      }
+      syncRecordsToCloud(recordsByDate);
     }
-  }, [recordsByDate, user]);
+  }, [recordsByDate]);
 
   const handleAddRecord = (poopTypeId, dateKey = targetDateKey) => {
     const now = new Date();

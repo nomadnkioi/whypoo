@@ -59,12 +59,12 @@ export const subscribeAuth = (callback) => {
   return onAuthStateChanged(auth, callback);
 };
 
-// 클라우드에 배변 기록 저장
-export const syncRecordsToCloud = async (userId, recordsByDate) => {
-  if (!db || !userId) return;
+// 클라우드에 배변 기록 저장 (Safari 브라우저 & 홈화면 웹앱 간 100% 실시간 공유)
+export const syncRecordsToCloud = async (recordsByDate) => {
+  if (!db) return;
   try {
-    const userDocRef = doc(db, 'users', userId, 'poop_data', 'records');
-    await setDoc(userDocRef, {
+    const docRef = doc(db, 'whypoo_app', 'main_records');
+    await setDoc(docRef, {
       recordsByDate,
       updatedAt: new Date().toISOString(),
     });
@@ -74,12 +74,12 @@ export const syncRecordsToCloud = async (userId, recordsByDate) => {
 };
 
 // 클라우드 기록 실시간 구독
-export const subscribeCloudRecords = (userId, onRecordsChange) => {
-  if (!db || !userId) return () => {};
-  const userDocRef = doc(db, 'users', userId, 'poop_data', 'records');
+export const subscribeCloudRecords = (onRecordsChange) => {
+  if (!db) return () => {};
+  const docRef = doc(db, 'whypoo_app', 'main_records');
 
   return onSnapshot(
-    userDocRef,
+    docRef,
     (snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.data();
